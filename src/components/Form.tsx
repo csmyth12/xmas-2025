@@ -7,8 +7,9 @@ interface FormProps {
   questionNumber: number;
   question: string;
   answerType: "string" | "number" | "multichoice";
-  answer: string;
+  answer: string | string[] | number;
   image: ReactNode;
+  errorMessages?: Record<string | number, string>;
 }
 
 export const Form: FC<FormProps> = ({
@@ -17,6 +18,7 @@ export const Form: FC<FormProps> = ({
   answer,
   answerType,
   image,
+  errorMessages,
 }) => {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
@@ -25,10 +27,22 @@ export const Form: FC<FormProps> = ({
   const onSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     if (answerType === "string") {
-      if (value.toLowerCase() === answer.toLowerCase()) {
-        router.push("question2");
+      if (typeof answer === "string") {
+        if (value.toLowerCase() === answer.toLowerCase()) {
+          setError("");
+          router.push(`question${questionNumber + 1}`);
+        }
+      } else if (Array.isArray(answer)) {
+        if (answer.find((a) => a.toLowerCase() === value.toLowerCase())) {
+          setError("");
+          router.push(`question${questionNumber + 1}`);
+        }
       }
-      setError("Try again");
+      if (errorMessages && errorMessages[value.toLowerCase()]) {
+        setError(errorMessages[value.toLowerCase()]);
+      } else {
+        setError("Try again");
+      }
     }
   };
 
