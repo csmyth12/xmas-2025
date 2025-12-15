@@ -24,6 +24,14 @@ export const Form: FC<FormProps> = ({
   const [error, setError] = useState("");
   const router = useRouter();
 
+  const setErrorMessage = () => {
+    if (errorMessages && errorMessages[value.toLowerCase()]) {
+      setError(errorMessages[value.toLowerCase()]);
+    } else {
+      setError("Try again");
+    }
+  };
+
   const onSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     if (answerType === "string") {
@@ -31,17 +39,16 @@ export const Form: FC<FormProps> = ({
         if (value.toLowerCase() === answer.toLowerCase()) {
           setError("");
           router.push(`question${questionNumber + 1}`);
+        } else {
+          setErrorMessage();
         }
       } else if (Array.isArray(answer)) {
         if (answer.find((a) => a.toLowerCase() === value.toLowerCase())) {
           setError("");
           router.push(`question${questionNumber + 1}`);
+        } else {
+          setErrorMessage();
         }
-      }
-      if (errorMessages && errorMessages[value.toLowerCase()]) {
-        setError(errorMessages[value.toLowerCase()]);
-      } else {
-        setError("Try again");
       }
     }
   };
