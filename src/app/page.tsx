@@ -1,8 +1,5 @@
-"use client"
-import { Page } from '@/components/Page'
+import { Page } from "@/features/Page";
 
 export default function Home() {
-  return (
-    <Page />
-  )
+  return <Page />;
 }
