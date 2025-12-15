@@ -18,6 +18,7 @@ const config: Config = {
         "xmas-green": "#18503C",
         "xmas-red": "#B91F1C",
         "xmas-deep-red": "#781714",
+        "xmas-light-red": "#D86558",
       },
     },
   },

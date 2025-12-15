@@ -1,11 +1,20 @@
 import { FC, PropsWithChildren } from "react";
 
 const className =
-  "rounded-md bg-xmas-red text-white font-bold py-2 px-4 border-xmas-red hover:bg-xmas-deep-red";
+  "rounded-md bg-xmas-red text-white font-bold py-2 px-4 border-xmas-red hover:bg-xmas-deep-red text-2xl";
 
-export const Button: FC<
-  PropsWithChildren<{ onClick?: () => void; href?: string }>
-> = ({ onClick, href, children }) => {
+interface Props {
+  onClick?: () => void;
+  href?: string;
+  type?: "button" | "submit" | "reset";
+}
+
+export const Button: FC<PropsWithChildren<Props>> = ({
+  onClick,
+  href,
+  children,
+  type,
+}) => {
   if (href) {
     return (
       <a className={className} href={href}>
@@ -15,7 +24,7 @@ export const Button: FC<
   }
 
   return (
-    <button className={className} onClick={onClick}>
+    <button className={className} onClick={onClick} type={type}>
       {children}
     </button>
   );
