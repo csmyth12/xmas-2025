@@ -9,7 +9,6 @@ const Question1 = () => {
       questionNumber={1}
       question="What's your name?"
       answer="Holly"
-      answerType="string"
       image={<Image src={You} aria-hidden alt="" />}
     />
   );
